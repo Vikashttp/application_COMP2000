@@ -2,7 +2,6 @@ package com.example.application_comp2000;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class aAddEmployee extends AppCompatActivity {
+public class AddEmployee extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;
     Employee currentUser;
@@ -29,7 +28,7 @@ public class aAddEmployee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_aadd_employee);
+        setContentView(R.layout.activity_add_employee);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -78,7 +77,7 @@ public class aAddEmployee extends AppCompatActivity {
         // Re-fetch from API to update local database
         ApiService.fetchAndStoreEmployees(this);
 
-        Intent iLaunchViewEmployees = new Intent(this, aEmployeeDetails.class);
+        Intent iLaunchViewEmployees = new Intent(this, EmployeeDetails.class);
         startActivity(iLaunchViewEmployees);
         finish();
     }

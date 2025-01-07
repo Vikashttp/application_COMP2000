@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import android.app.DatePickerDialog;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -25,47 +24,39 @@ import androidx.core.view.WindowInsetsCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-public class EditPtoRequest extends AppCompatActivity {
+public class Requestleave extends AppCompatActivity {
 
-    Employee currentUser;
-    DatabaseHelper databaseHelper;
-    TextView ptoEditStartDatetime, ptoEditEndDatetime;
-    TextView commentEditText;
-    int ptoRequestId;
+    com.example.employeeapp.Employee currentUser;
+    com.example.employeeapp.DatabaseHelper databaseHelper;
+
+    TextView ptoStartDatetime, ptoEndDatetime;
+    TextView ptoCommentText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_edit_pto_request);
+        setContentView(R.layout.activity_request_leave);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-
             return insets;
         });
 
-        databaseHelper = DatabaseHelper.getInstance(this);
+        databaseHelper = com.example.employeeapp.DatabaseHelper.getInstance(this);
         currentUser = databaseHelper.loadCurrentUser(this);
 
-        ptoEditStartDatetime = findViewById(R.id.ptoEditStartDatetime);
-        ptoEditEndDatetime = findViewById(R.id.ptoEditEndDatetime);
-        commentEditText = findViewById(R.id.ptoEditAddInfo);
+        ptoStartDatetime = findViewById(R.id.ptoStartDatetime);
+        ptoEndDatetime = findViewById(R.id.ptoEndDatetime);
+        ptoCommentText = findViewById(R.id.ptoAddInfo);
 
-        Intent intent = getIntent();
-        ptoRequestId = intent.getIntExtra("ptoRequestId", -1); // defaults -1
-        String startDate = intent.getStringExtra("startDate");
-        String endDate = intent.getStringExtra("endDate");
-        String requestComment = intent.getStringExtra("requestComment");
-
-        ptoEditStartDatetime.setText(startDate);
-        ptoEditEndDatetime.setText(endDate);
-        commentEditText.setText(requestComment);
-
-        ptoEditStartDatetime.setOnClickListener(view -> showDatePickerDialog(true));
-        ptoEditEndDatetime.setOnClickListener(view -> showDatePickerDialog(false));
+        ptoStartDatetime.setOnClickListener(view -> showDatePickerDialog(true));
+        ptoEndDatetime.setOnClickListener(view -> showDatePickerDialog(false));
     }
 
+
+    // A DatePickerDialog was used to standardise the input into ISO8601
+    // https://developer.android.com/reference/android/app/DatePickerDialog
     private void showDatePickerDialog(final boolean isStartDate) {
         Calendar calendar = Calendar.getInstance();
 
@@ -87,9 +78,9 @@ public class EditPtoRequest extends AppCompatActivity {
                 String formattedDateTime = dateFormat.format(calendar.getTime());
 
                 if (isStartDate) {
-                    ptoEditStartDatetime.setText(formattedDateTime);
+                    ptoStartDatetime.setText(formattedDateTime);
                 } else {
-                    ptoEditEndDatetime.setText(formattedDateTime);
+                    ptoEndDatetime.setText(formattedDateTime);
                 }
             }
 
@@ -102,18 +93,28 @@ public class EditPtoRequest extends AppCompatActivity {
     }
 
     public void handleSubmit(View v) {
-        String startDate = ptoEditStartDatetime.getText().toString().trim();
-        String endDate = ptoEditEndDatetime.getText().toString().trim();
-        String requestComment = commentEditText.getText().toString().trim();
+        String startDate = ptoStartDatetime.getText().toString().trim();
+        String endDate = ptoEndDatetime.getText().toString().trim();
+        String requestComment = ptoCommentText.getText().toString().trim();
 
         ContentValues values = new ContentValues();
+        values.put("requester_id", currentUser.getId());
         values.put("start_date", startDate);
         values.put("end_date", endDate);
+        values.put("status", "Waiting");
         values.put("request_comment", requestComment);
 
         try (SQLiteDatabase db = databaseHelper.getWritableDatabase()) {
-            db.update("PtoRequest", values, "id = ?", new String[]{ Integer.toString(ptoRequestId)} );
-            Toast.makeText(this, "Updated PTO Request.", Toast.LENGTH_SHORT).show();
+            long result = db.insert("PtoRequest", null, values);
+            Log.e("RequestPTO", Long.toString(result));
+
+            if (result == -1) {
+                Toast.makeText(this, "Failed to submit PTO Request.", Toast.LENGTH_SHORT).show();
+                // throw new SQLiteConstraintException("Possible duplicate PTO request for these dates; manually thrown!");
+                return;
+            }
+
+            Toast.makeText(this, "Submitted PTO Request.", Toast.LENGTH_SHORT).show();
         } catch (SQLException e) {
             if (e instanceof SQLiteConstraintException) {
                 Toast.makeText(this, "You have already submitted a PTO request for these dates.", Toast.LENGTH_SHORT).show();

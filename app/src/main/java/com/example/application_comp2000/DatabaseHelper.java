@@ -2,7 +2,6 @@ package com.example.application_comp2000;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -143,8 +142,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return employee;
     }
 
-    public PtoRequest cursorToPtoRequest(Cursor cursor) {
-        return new PtoRequest(
+    public LeaveRequest cursorToPtoRequest(Cursor cursor) {
+        return new LeaveRequest(
                 cursor.getInt(cursor.getColumnIndexOrThrow("id")),
                 cursor.getInt(cursor.getColumnIndexOrThrow("requester_id")),
                 cursor.getString(cursor.getColumnIndexOrThrow("status")),
@@ -194,24 +193,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return employee;
     }
 
-    public List<PtoRequest> getAllPtoRequests() {
-        List<PtoRequest> ptoRequestList = new ArrayList<>();
+    public List<LeaveRequest> getAllleaveRequests() {
+        List<LeaveRequest> leaveRequestList = new ArrayList<>();
 
         try (SQLiteDatabase db = this.getReadableDatabase(); Cursor cursor = db.rawQuery("SELECT * FROM PtoRequest", null)) {
             if (cursor.moveToFirst()) {
                 do {
-                    ptoRequestList.add(cursorToPtoRequest(cursor));
+                    leaveRequestList.add(cursorToPtoRequest(cursor));
                 } while (cursor.moveToNext());
             }
         } catch (Exception e) {
             Log.e("DatabaseError", "Error fetching PTO requests: " + e.getMessage());
         }
 
-        return ptoRequestList;
+        return leaveRequestList;
     }
 
-    public List<PtoRequest> getAllPtoRequestsByRequester(int requesterId) {
-        List<PtoRequest> ptoRequestList = new ArrayList<>();
+    public List<LeaveRequest> getAllPtoRequestsByRequester(int requesterId) {
+        List<LeaveRequest> leaveRequestList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM PtoRequest WHERE requester_id = ?",
@@ -219,14 +218,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                ptoRequestList.add(cursorToPtoRequest(cursor));
+                leaveRequestList.add(cursorToPtoRequest(cursor));
             } while (cursor.moveToNext());
         }
 
         cursor.close();
         db.close();
 
-        return ptoRequestList;
+        return leaveRequestList;
     }
 
     public Employee getManager(int subordinateId) {

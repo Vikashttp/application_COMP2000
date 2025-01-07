@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.List;
 
-public class aPtoRequests extends AppCompatActivity {
+public class LeaveRequests extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;
     Employee currentUser;
@@ -22,7 +22,7 @@ public class aPtoRequests extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_apto_requests);
+        setContentView(R.layout.activity_leave_requests);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -33,8 +33,8 @@ public class aPtoRequests extends AppCompatActivity {
         currentUser = databaseHelper.loadCurrentUser(this);
 
         aPtoListView = findViewById(R.id.aptoListView);
-        List<PtoRequest> ptoRequestList = databaseHelper.getAllPtoRequests();
-        aPtoAdapter = new com.example.employeeapp.aPtoAdapter(this, ptoRequestList);
+        List<LeaveRequest> leaveRequestList = databaseHelper.getAllPtoRequests();
+        aPtoAdapter = new com.example.employeeapp.aPtoAdapter(this, leaveRequestList);
         aPtoListView.setAdapter(aPtoAdapter);
     }
 }

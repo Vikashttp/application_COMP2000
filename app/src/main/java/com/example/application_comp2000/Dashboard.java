@@ -30,7 +30,7 @@ public class Dashboard extends AppCompatActivity {
         databaseHelper = DatabaseHelper.getInstance(this);
 
         findViewById(R.id.employeeDetailsButton).setVisibility(View.GONE);
-        findViewById(R.id.employeePtoRequestsButton).setVisibility(View.GONE);
+        findViewById(R.id.employeeleaveRequestsButton).setVisibility(View.GONE);
         findViewById(R.id.addEmployeeButton).setVisibility(View.GONE);
 
         currentUser = databaseHelper.loadCurrentUser(this);
@@ -39,7 +39,7 @@ public class Dashboard extends AppCompatActivity {
         assert currentUser != null;
         if (currentUser.getRole().equals("Admin")) {
             findViewById(R.id.employeeDetailsButton).setVisibility(View.VISIBLE);
-            findViewById(R.id.employeePtoRequestsButton).setVisibility(View.VISIBLE);
+            findViewById(R.id.employeeleaveRequestsButton).setVisibility(View.VISIBLE);
             findViewById(R.id.addEmployeeButton).setVisibility(View.VISIBLE);
             employeeNameTextView.setText(String.format("%s [Admin]", currentUser.getFullName()));
         } else {
@@ -55,7 +55,7 @@ public class Dashboard extends AppCompatActivity {
 
     public void launchHolidayRequests(View v)
     {
-        Intent iLaunchHolidayRequests = new Intent(this, ptoMenu.class);
+        Intent iLaunchHolidayRequests = new Intent(this, LeaveMenu.class);
         startActivity(iLaunchHolidayRequests);
     }
 
@@ -67,19 +67,19 @@ public class Dashboard extends AppCompatActivity {
 
     public void launchAEmployeeDetails(View v)
     {
-        Intent iLaunchAEmployeeDetails = new Intent(this, com.example.employeeapp.aEmployeeDetails.class);
+        Intent iLaunchAEmployeeDetails = new Intent(this, application_comp2000.EmployeeDetails.class);
         startActivity(iLaunchAEmployeeDetails);
     }
 
     public void launchPtoRequests(View v)
     {
-        Intent iLaunchPtoRequests = new Intent(this, com.example.employeeapp.aPtoRequests.class);
+        Intent iLaunchPtoRequests = new Intent(this, application_comp2000.leaveRequests.class);
         startActivity(iLaunchPtoRequests);
     }
 
     public void launchAddEmployee(View v)
     {
-        Intent iLaunchAddEmployee = new Intent(this, com.example.employeeapp.aAddEmployee.class);
+        Intent iLaunchAddEmployee = new Intent(this, application_comp2000.AddEmployee.class);
         startActivity(iLaunchAddEmployee);
     }
 

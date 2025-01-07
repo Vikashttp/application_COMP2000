@@ -1,8 +1,6 @@
 package com.example.application_comp2000;
 
-import android.util.Log;
-
-public class PtoRequest {
+public class LeaveRequest {
     private final int id;
     private final int requesterId;
     private String status;
@@ -10,8 +8,8 @@ public class PtoRequest {
     private final String endDate;
     private final String requestComment;
 
-    public PtoRequest(int id, int requesterId, String status, String startDate,
-                      String endDate, String requestComment) {
+    public LeaveRequest(int id, int requesterId, String status, String startDate,
+                        String endDate, String requestComment) {
         this.id = id;
         this.requesterId = requesterId;
         this.status = status;

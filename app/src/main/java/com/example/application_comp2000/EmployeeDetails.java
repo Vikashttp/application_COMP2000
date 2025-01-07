@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.List;
 
-public class aEmployeeDetails extends AppCompatActivity {
+public class EmployeeDetails extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;
     Employee currentUser;
@@ -22,7 +22,7 @@ public class aEmployeeDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_aemployee_details);
+        setContentView(R.layout.activity_employee_details);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

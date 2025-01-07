@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RequestPTO">
+    tools:context=".Requestleave">
 
     <ImageView
         android:id="@+id/employeePfp"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Request Holiday"
+        android:text="Edit Holiday Request"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/ptoDashboardLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
             android:text="Start Date" />
 
         <TextView
-            android:id="@+id/ptoStartDatetime"
+            android:id="@+id/ptoEditStartDatetime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -75,7 +75,7 @@
             android:text="End Date" />
 
         <TextView
-            android:id="@+id/ptoEndDatetime"
+            android:id="@+id/ptoEditEndDatetime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -97,7 +97,7 @@
             android:text="Additional Information" />
 
         <EditText
-            android:id="@+id/ptoAddInfo"
+            android:id="@+id/ptoEditAddInfo"
             android:layout_width="match_parent"
             android:layout_height="94dp"
             android:ems="10"
@@ -109,14 +109,12 @@
             tools:layout_editor_absoluteY="48dp" />
 
         <Button
-            android:id="@+id/ptoSubmit"
+            android:id="@+id/ptoEditSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#2196F3"
             android:onClick="handleSubmit"
             android:text="Submit Request" />
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

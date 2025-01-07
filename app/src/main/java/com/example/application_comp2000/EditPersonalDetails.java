@@ -28,7 +28,7 @@ public class EditPersonalDetails extends AppCompatActivity {
             return insets;
         });
 
-        databaseHelper = com.example.employeeapp.DatabaseHelper.getInstance(this);
+        databaseHelper = com.example.application_comp2000.DatabaseHelper.getInstance(this);
         currentUser = databaseHelper.loadCurrentUser(this);
 
         TextView employeeNameTextView = findViewById(R.id.employeeName);
@@ -66,9 +66,9 @@ public class EditPersonalDetails extends AppCompatActivity {
         Toast.makeText(this, "Employee details updated successfully", Toast.LENGTH_SHORT).show();
 
         // Reflect changes in the API
-        com.example.employeeapp.ApiService.apiUpdateUser(this, currentUser);
+        com.example.application_comp2000.ApiService.apiUpdateUser(this, currentUser);
 
-        Intent returnToDashboard = new Intent(EditPersonalDetails.this, com.example.employeeapp.Dashboard.class);
+        Intent returnToDashboard = new Intent(EditPersonalDetails.this, com.example.application_comp2000.Dashboard.class);
         startActivity(returnToDashboard);
         finish();
     }

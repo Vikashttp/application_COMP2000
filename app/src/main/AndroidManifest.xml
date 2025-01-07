@@ -17,22 +17,22 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".aEditEmployee"
+            android:name=".EditEmployee"
             android:exported="false" />
         <activity
-            android:name=".EditPtoRequest"
+            android:name=".EditleaveRequest"
             android:exported="false" />
         <activity
             android:name=".ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".aAddEmployee"
+            android:name=".AddEmployee"
             android:exported="false" />
         <activity
-            android:name=".aPtoRequests"
+            android:name=".LeaveRequests"
             android:exported="false" />
         <activity
-            android:name=".aEmployeeDetails"
+            android:name=".EmployeeDetails"
             android:exported="false" />
         <activity
             android:name=".ViewHoliday"
@@ -41,10 +41,10 @@
             android:name=".Settings"
             android:exported="false" />
         <activity
-            android:name=".RequestPTO"
+            android:name=".Requestleave"
             android:exported="false" />
         <activity
-            android:name=".ptoMenu"
+            android:name=".LeaveMenu"
             android:exported="false" />
         <activity
             android:name=".EditPersonalDetails"

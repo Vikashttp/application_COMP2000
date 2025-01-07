@@ -14,46 +14,46 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class aPtoAdapter extends BaseAdapter {
+public class LeaveAdapter extends BaseAdapter {
     private final DatabaseHelper databaseHelper;
     private final Context context;
-    private final List<PtoRequest> aPtoRequestList;
+    private final List<LeaveRequest> aLeaveRequestList;
 
-    public aPtoAdapter(Context context, List<PtoRequest> aPtoRequestList) {
+    public aPtoAdapter(Context context, List<LeaveRequest> aLeaveRequestList) {
         this.context = context;
-        this.aPtoRequestList = aPtoRequestList;
+        this.aLeaveRequestList = aLeaveRequestList;
         this.databaseHelper = DatabaseHelper.getInstance(context);
     }
 
     @Override
     public int getCount() {
-        return aPtoRequestList.size();
+        return aLeaveRequestList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return aPtoRequestList.get(position);
+        return aLeaveRequestList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return aPtoRequestList.get(position).getId();
+        return aLeaveRequestList.get(position).getId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.admin_pto_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.admin_leave_list_item, parent, false);
         }
 
-        PtoRequest ptoRequest = aPtoRequestList.get(position);
-        if (ptoRequest.getStatus().equals("Approved") || ptoRequest.getStatus().equals("Denied")) {
+        LeaveRequest leaveRequest = aLeaveRequestList.get(position);
+        if (leaveRequest.getStatus().equals("Approved") || leaveRequest.getStatus().equals("Denied")) {
             return new View(context);
         }
 
-        Log.d("RequesterId", Integer.toString(ptoRequest.getRequesterId()));
-        Employee requester = databaseHelper.getEmployeeById(ptoRequest.getRequesterId());
+        Log.d("RequesterId", Integer.toString(leaveRequest.getRequesterId()));
+        Employee requester = databaseHelper.getEmployeeById(leaveRequest.getRequesterId());
 
         TextView requesterTextView = convertView.findViewById(R.id.apto_employee_name);
         TextView dateRangeTextView = convertView.findViewById(R.id.apto_date_range);
@@ -61,37 +61,37 @@ public class aPtoAdapter extends BaseAdapter {
         TextView commentTextView = convertView.findViewById(R.id.apto_comment);
 
         requesterTextView.setText(requester.getFullName());
-        dateRangeTextView.setText(context.getString(R.string.pto_request_dates, ptoRequest.getStartDate(), ptoRequest.getEndDate()));
-        statusTextView.setText(ptoRequest.getStatus());
-        commentTextView.setText(ptoRequest.getRequestComment());
+        dateRangeTextView.setText(context.getString(R.string.pto_request_dates, leaveRequest.getStartDate(), leaveRequest.getEndDate()));
+        statusTextView.setText(leaveRequest.getStatus());
+        commentTextView.setText(leaveRequest.getRequestComment());
 
         Button approveButton = convertView.findViewById(R.id.apto_approve_button);
         Button denyButton = convertView.findViewById(R.id.apto_deny_button);
 
-        if (ptoRequest.getStatus().equals("Approved") || ptoRequest.getStatus().equals("Denied")) {
+        if (leaveRequest.getStatus().equals("Approved") || leaveRequest.getStatus().equals("Denied")) {
             approveButton.setVisibility(View.GONE);
             denyButton.setVisibility(View.GONE);
         }
 
         approveButton.setOnClickListener(v -> {
-            updateRequestStatus(ptoRequest, "Approved");
+            updateRequestStatus(leaveRequest, "Approved");
         });
 
         denyButton.setOnClickListener(v -> {
-            updateRequestStatus(ptoRequest, "Denied");
+            updateRequestStatus(leaveRequest, "Denied");
         });
 
         return convertView;
     }
 
 
-    private void updateRequestStatus(PtoRequest ptoRequest, String updatedStatus) {
+    private void updateRequestStatus(LeaveRequest leaveRequest, String updatedStatus) {
         ContentValues statusValue = new ContentValues();
         statusValue.put("status", updatedStatus);
 
-        ptoRequest.setStatus(updatedStatus);
+        leaveRequest.setStatus(updatedStatus);
         try (SQLiteDatabase db = databaseHelper.getWritableDatabase()) {
-            db.update("PtoRequest", statusValue, "id = ?", new String[]{ Integer.toString(ptoRequest.getId()) });
+            db.update("PtoRequest", statusValue, "id = ?", new String[]{ Integer.toString(leaveRequest.getId()) });
             Toast.makeText(context, updatedStatus + " PTO Request.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(context, "Failed to update PTO Request.", Toast.LENGTH_SHORT).show();

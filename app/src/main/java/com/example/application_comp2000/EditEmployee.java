@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class aEditEmployee extends AppCompatActivity {
+public class EditEmployee extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;
     Employee currentUser, employeeToEdit;
@@ -33,7 +33,7 @@ public class aEditEmployee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_aedit_employee);
+        setContentView(R.layout.activity_edit_employee);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

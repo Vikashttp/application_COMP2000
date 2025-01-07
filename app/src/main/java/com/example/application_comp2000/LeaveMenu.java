@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 import android.view.View;
 import android.widget.TextView;
 
-public class ptoMenu extends AppCompatActivity {
+public class LeaveMenu extends AppCompatActivity {
 
     com.example.employeeapp.Employee currentUser;
     com.example.employeeapp.DatabaseHelper databaseHelper;
@@ -20,7 +20,7 @@ public class ptoMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_pto_menu);
+        setContentView(R.layout.activity_leave_menu);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -36,7 +36,7 @@ public class ptoMenu extends AppCompatActivity {
 
     public void launchRequestPto(View v)
     {
-        Intent iLaunchRequestPto = new Intent(this, RequestPTO.class);
+        Intent iLaunchRequestPto = new Intent(this, Requestleave.class);
         startActivity(iLaunchRequestPto);
     }
 
